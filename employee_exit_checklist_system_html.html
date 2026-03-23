@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TCE Exit Checklist</title>
+<style>
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    margin: 0;
+    background: #f4f6fb;
+}
+.header {
+    background: linear-gradient(90deg, #1a0dab, #0b3d91);
+    color: white;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.header img {
+    height: 50px;
+}
+.container {
+    max-width: 1000px;
+    margin: 20px auto;
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+h2 {
+    border-left: 5px solid #1a0dab;
+    padding-left: 10px;
+    color: #1a0dab;
+}
+input[type="text"], input[type="date"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+th {
+    background: #1a0dab;
+    color: white;
+    padding: 10px;
+}
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+tr:nth-child(even) {
+    background: #f9f9f9;
+}
+button {
+    padding: 10px 20px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.btn-save { background: #ff5a00; color: white; }
+.btn-print { background: #1a0dab; color: white; }
+button:hover { opacity: 0.9; }
+.footer {
+    text-align: center;
+    margin-top: 20px;
+    color: #888;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <img src="logo.png" alt="TCE Logo">
+    <div>
+        <h1>บริษัท ทีซีอี โปรเจก จำกัด</h1>
+        <p>Employee Exit Checklist System</p>
+    </div>
+</div>
+
+<div class="container">
+
+<h2>ข้อมูลพนักงาน</h2>
+<input type="text" id="name" placeholder="ชื่อ-นามสกุล">
+<input type="text" id="position" placeholder="ตำแหน่ง">
+<input type="text" id="dept" placeholder="แผนก">
+<input type="date" id="lastday">
+
+<h2>ทรัพย์สินบริษัท</h2>
+<table>
+<tr><th>รายการ</th><th>ส่งคืนแล้ว</th></tr>
+<tr><td>Notebook / PC</td><td><input type="checkbox"></td></tr>
+<tr><td>โทรศัพท์</td><td><input type="checkbox"></td></tr>
+<tr><td>Key Card</td><td><input type="checkbox"></td></tr>
+<tr><td>อุปกรณ์อื่นๆ</td><td><input type="checkbox"></td></tr>
+</table>
+
+<h2>ระบบ IT</h2>
+<table>
+<tr><th>รายการ</th><th>ดำเนินการ</th></tr>
+<tr><td>ปิด Email</td><td><input type="checkbox"></td></tr>
+<tr><td>ปิดระบบทั้งหมด</td><td><input type="checkbox"></td></tr>
+<tr><td>Backup ข้อมูล</td><td><input type="checkbox"></td></tr>
+<tr><td>โอนงาน</td><td><input type="checkbox"></td></tr>
+</table>
+
+<h2>งาน</h2>
+<table>
+<tr><th>รายการ</th><th>เรียบร้อย</th></tr>
+<tr><td>ส่งมอบงาน</td><td><input type="checkbox"></td></tr>
+<tr><td>เอกสารครบ</td><td><input type="checkbox"></td></tr>
+<tr><td>แจ้งทีม</td><td><input type="checkbox"></td></tr>
+</table>
+
+<button class="btn-save" onclick="saveData()">💾 บันทึก</button>
+<button class="btn-print" onclick="printPage()">🖨 พิมพ์</button>
+
+<div class="footer">
+TCE Project Co., Ltd.
+</div>
+
+</div>
+
+<script>
+function saveData(){
+    const data = {
+        name: document.getElementById('name').value,
+        position: document.getElementById('position').value,
+        dept: document.getElementById('dept').value,
+        lastday: document.getElementById('lastday').value
+    };
+    localStorage.setItem('exitForm', JSON.stringify(data));
+    alert('บันทึกเรียบร้อย');
+}
+
+function printPage(){
+    window.print();
+}
+
+window.onload = function(){
+    const saved = JSON.parse(localStorage.getItem('exitForm'));
+    if(saved){
+        document.getElementById('name').value = saved.name;
+        document.getElementById('position').value = saved.position;
+        document.getElementById('dept').value = saved.dept;
+        document.getElementById('lastday').value = saved.lastday;
+    }
+}
+</script>
+
+</body>
+</html>
